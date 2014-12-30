@@ -108,5 +108,14 @@ defmodule Earmark.Helpers do
   defp parse_decimal_entity(<< ch :: utf8, rest :: binary>>, entity) do
     parse_decimal_entity(rest, [ ch | entity ])
   end
+
+  @doc """
+  This will make text safe for urls
+  """
+  def url_safe(text) do
+    text 
+    |> String.downcase 
+    |> replace(~r/ /,"_", [:global])
+  end
   
 end

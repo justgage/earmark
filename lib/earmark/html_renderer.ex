@@ -8,7 +8,7 @@ defmodule Earmark.HtmlRenderer do
   
   alias  Earmark.Block
   import Earmark.Inline,  only: [ convert: 2 ]
-  import Earmark.Helpers, only: [ escape: 1, behead: 2 ]
+  import Earmark.Helpers, only: [ escape: 1, behead: 2, url_safe: 1 ]
 
   def render(blocks, context, map_func) do
     map_func.(blocks, &(render_block(&1, context, map_func)))
@@ -54,7 +54,8 @@ defmodule Earmark.HtmlRenderer do
   # Heading #
   ###########
   def render_block(%Block.Heading{level: level, content: content, attrs: attrs}, _context, _mf) do
-    html = "<h#{level}>#{content}</h#{level}>\n"
+    url_content = content |> url_safe
+    html = "<h#{level}><a name=\"\##{url_content}\">#{content}</a></h#{level}>\n"
     add_attrs(html, attrs)
   end
 
