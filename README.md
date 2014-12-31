@@ -1,8 +1,9 @@
 
 
 
+### JustGage's Changes
 
-
+I've changed so that headers will automaticly have links to them just like in GitHub markdown. I'm thinking of possibly having an ability to add a table of contents as well.
 
 <!-- moduledoc: Earmark -->
 
