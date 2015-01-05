@@ -53,9 +53,14 @@ defmodule Earmark.HtmlRenderer do
   ###########
   # Heading #
   ###########
-  def render_block(%Block.Heading{level: level, content: content, attrs: attrs}, _context, _mf) do
-    url_content = content |> url_safe
-    html = "<h#{level}><a name=\"\##{url_content}\">#{content}</a></h#{level}>\n"
+  def render_block(%Block.Heading{level: level, content: content, attrs: attrs}, context, _mf) do
+
+    if context.options.header_links do
+      url_content = content |> url_safe
+      attrs =  attrs <> "#" <> url_content
+    end
+
+    html = "<h#{level}>#{content}</h#{level}>\n"
     add_attrs(html, attrs)
   end
 

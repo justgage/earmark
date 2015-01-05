@@ -5,12 +5,18 @@ defmodule Earmark.Options do
   defstruct  renderer: Earmark.HtmlRenderer,
 
              # inline style options  
-             gfm: true, breaks: false, pedantic: false,
-             smartypants: true, sanitize: false,
-             footnotes: false, footnote_offset: 1,
+             gfm: true,
+             breaks: false,
+             pedantic: false,
+             smartypants: true,
+             sanitize: false,
+             footnotes: false,
+             footnote_offset: 1,
+             header_links: false,
 
              # Internal—only override if you're brave
-             do_smartypants: nil, do_sanitize: nil,
+             do_smartypants: nil,
+             do_sanitize: nil,
 
              # Very internal—the callback used to perform
              # parallel rendering. Set to &Enum.map/2

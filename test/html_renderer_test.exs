@@ -1,7 +1,11 @@
 defmodule HtmlRendererTest do
   use ExUnit.Case
 
-  import Earmark.HtmlRenderer, only: [ expand: 2, add_attrs: 2, add_attrs: 3 ]
+  import Earmark.HtmlRenderer, only: [ expand: 2, add_attrs: 2, add_attrs: 3, render_block: 3 ]
+  alias Earmark.Context
+  alias Earmark.Options
+  alias Earmark.Block
+  
 
   # This is just for the internals...
 
@@ -63,6 +67,22 @@ defmodule HtmlRendererTest do
   test "merges additional different attributes" do
     assert add_attrs("<p>xxx</p>", ".one", [{"id", ["two"]}]) ==
       "<p id=\"two\" class=\"one\">xxx</p>"
+  end
+
+  test "header tag links added correctly" do
+    test_str = "Hello World"
+    heading = %Block.Heading{content: test_str, attrs: "", level: 1}
+    options = %Options{header_links: true}
+    context = %Context{options: options}
+
+    assert render_block(heading, context, nil) == "<h1 id=\"hello_world\">#{test_str}</h1>\n"
+
+    heading = %Block.Heading{content: test_str, level: 1}
+    options = %Options{}
+    context = %Context{options: options}
+
+    assert render_block(heading, context, nil) == "<h1>#{test_str}</h1>\n"
+
   end
 
 end
